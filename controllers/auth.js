@@ -19,7 +19,6 @@ export const signup =  tryCatchMiddleware(async(req, res)=> {
         const newUser = new User({...req.body, password: hashedPassword})
         await newUser.save()
         res.status(200).send("Account has been created")
-        next(createError(500, 'Something went wrong!'))
 })
 
 export const signin = tryCatchMiddleware(async(req, res)=> {

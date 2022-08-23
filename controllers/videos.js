@@ -1,5 +1,6 @@
 import { tryCatchMiddleware } from "../middleware/tryCatch.js"
 import Video from "../models/Video.js"
+import User from "../models/User.js"
 
 export const addVidoe = tryCatchMiddleware( async(req, res )=> {
     const newVideo = new Video({userId: req.user.id, ...req.body})
@@ -43,14 +44,26 @@ export const addView = tryCatchMiddleware( async(req, res)=> {
     res.status(200).send("view has been incremented!")
 })
 
-export const trendsVideos = tryCatchMiddleware( async(req, res)=> {
-    
+export const randomVideos = tryCatchMiddleware( async(req, res)=> {
+    const randomVideos = await Video.aggregate([{$sample:{size: 40}}])
+    res.status(200).send(randomVideos)
 })
 
-export const randomVideos = tryCatchMiddleware( async(req, res)=> {
-    
+export const trendsVideos = tryCatchMiddleware( async(req, res)=> {
+    const trendsVideos = await Video.find().sort({views: -1})
+    res.send(trendsVideos)
 })
 
 export const subscribedChannelsVideos = tryCatchMiddleware( async(req, res)=> {
+    const user = await User.findById(req.user.id)
+    if(!user) return res.status(404).send("No user found with the given ID")
+
+    const subscribedChannels = user.subscribedChannels
+
+    const list = Promise.all(subscribedChannels.map(channelId => (
+        Video.find({userId: channelId})
+    )))
+
+    res.status(200).send(list)
     
 })
