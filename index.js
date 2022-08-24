@@ -14,8 +14,8 @@ mongoose.connect('mongodb://localhost/youtube-clone')
 app.use(express.json())
 app.use(cookieParser())
 app.use('/api/auth/', userAuthentication)
-app.use('/api/users', usersRoutes)
-app.use('/api/videos', videosRoutes)
+app.use('/api/users/', usersRoutes)
+app.use('/api/videos/', videosRoutes)
 
 //Error handling
 // app.use((err, req, res, next) => {

@@ -5,17 +5,17 @@ const router = express.Router()
 
 router.put('/updateUser/:id', verifyToken, updateUser)
 
-router.get('/findUser/:id', getUser)
+router.get('/findUser/:id', verifyToken, getUser)
 
-router.delete('/deleteUser/:id', deleteUser)
+router.delete('/deleteUser/:id', verifyToken, deleteUser)
 
-router.post('/subscribe/:channelId', subscribe)
+router.post('/subscribe/:channelId', verifyToken, subscribe)
 
-router.put('/unSubscribe/:channelId', unSubscribe)
+router.put('/unSubscribe/:channelId', verifyToken, unSubscribe)
 
-router.put('/like/:videoId', like)
+router.put('/like/:videoId', verifyToken, like)
 
-router.put('/disLike/:videoId', disLike)
+router.put('/disLike/:videoId', verifyToken, disLike)
 
 
 

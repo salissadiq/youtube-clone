@@ -5,7 +5,7 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi)
 const videoSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true,
         trim: true
     },
@@ -14,7 +14,6 @@ const videoSchema = new mongoose.Schema({
         required: true,
         trim: true,
         minlength: 5,
-        maxlength: 30,
         unique: true
     },
     description: {
@@ -26,9 +25,8 @@ const videoSchema = new mongoose.Schema({
     imgUrl: {
         type: String
     },
-    VideoUrl:{
-        type: Number,
-        default: 0,
+    videoUrl:{
+        type: String,
     },
     views:{
         type: Number,

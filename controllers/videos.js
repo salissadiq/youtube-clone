@@ -59,11 +59,19 @@ export const subscribedChannelsVideos = tryCatchMiddleware( async(req, res)=> {
     if(!user) return res.status(404).send("No user found with the given ID")
 
     const subscribedChannels = user.subscribedChannels
+    // console.log(subscribedChannels)
 
-    const list = Promise.all(subscribedChannels.map(channelId => (
-        Video.find({userId: channelId})
-    )))
+    const list = await Promise.all(subscribedChannels.map((channelId) => {
+       return Video.find({userId: channelId})
+    }))
+    // const list = await Video.find().where('userId').in(subscribedChannels).exec()
+        res.status(200).send(list) 
 
-    res.status(200).send(list)
-    
+    // const channelIds = subscribedChannels.map((channelId) => channelId)
+    // console.log(channelIds)
+    // Video.find({userId: {$in: channelIds}}).then((resp)=> {
+    //     res.status(200).send(resp) 
+    // })
+
+       
 })
