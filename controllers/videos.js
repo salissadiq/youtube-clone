@@ -65,7 +65,7 @@ export const subscribedChannelsVideos = tryCatchMiddleware( async(req, res)=> {
        return Video.find({userId: channelId})
     }))
     // const list = await Video.find().where('userId').in(subscribedChannels).exec()
-        res.status(200).send(list) 
+        res.status(200).send(list.flat().sort((a, b) => b.createdAt - a.createdAt)) 
 
     // const channelIds = subscribedChannels.map((channelId) => channelId)
     // console.log(channelIds)
