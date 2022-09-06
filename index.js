@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import usersRoutes from './routes/users.js'
 import userAuthentication from './routes/auth.js'
 import videosRoutes from './routes/videos.js'
+import commentsRoutes from './routes/comments.js'
 const app = express()
 
 mongoose.connect('mongodb://localhost/youtube-clone')
@@ -16,6 +17,7 @@ app.use(cookieParser())
 app.use('/api/auth/', userAuthentication)
 app.use('/api/users/', usersRoutes)
 app.use('/api/videos/', videosRoutes)
+app.use('/api/comments/', commentsRoutes)
 
 //Error handling
 // app.use((err, req, res, next) => {

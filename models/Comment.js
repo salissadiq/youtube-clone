@@ -1,13 +1,14 @@
+import Joi from 'joi'
 import mongoose from 'mongoose'
 
 const commentSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true,
         trim: true
     },
     videoId: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true,
         trim: true,
     },
@@ -21,4 +22,14 @@ const commentSchema = new mongoose.Schema({
 
 const Comment = mongoose.model('Comment', commentSchema)
 
-exports.Comment = Comment
+export const validateComment = (comment) => {
+    const schema = Joi.object({
+        userId: Joi.string().required(),
+        videoId: Joi.string().required(),
+        description: Joi.string().required()
+    })
+
+    return schema.validate(comment)
+}
+
+export default Comment
