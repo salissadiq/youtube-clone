@@ -20,7 +20,7 @@ app.use('/api/users/', usersRoutes)
 app.use('/api/videos/', videosRoutes)
 app.use('/api/comments/', commentsRoutes)
 
-// Error handling
+// Error handling midlleware
 app.use((err, req, res, next) => {
     const statusCode = err.status || 500
     const message = "Something went wrong!"
