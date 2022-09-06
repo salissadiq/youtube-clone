@@ -1,6 +1,6 @@
-import express from 'express'
+import express, { Router } from 'express'
 
-import { addVidoe,updateVidoe, getVidoe, deleteVidoe, addView, trendsVideos, randomVideos, subscribedChannelsVideos } from "../controllers/videos.js";
+import { addVidoe,updateVidoe, getVidoe, deleteVidoe, addView, trendsVideos, randomVideos, subscribedChannelsVideos, getVideoByTags, searchVideo } from "../controllers/videos.js";
 import { verifyToken } from '../middleware/verifyToken.js';
 const router = express.Router()
 
@@ -14,11 +14,13 @@ router.delete('/deleteVideo/:videoId', verifyToken, deleteVidoe)
 
 router.get('/viewVideo/:videoId', verifyToken, addView)
 
-router.get('/trendsVideo/:viedoId', verifyToken, trendsVideos)
+router.get('/trendsVideo', verifyToken, trendsVideos)
 
 router.get('/randomVideos', verifyToken, randomVideos)
 
 router.get('/subdcribedChannelsVideos', verifyToken, subscribedChannelsVideos)
+router.get('/tags', getVideoByTags)
+router.get('/search', searchVideo)
 
 
 

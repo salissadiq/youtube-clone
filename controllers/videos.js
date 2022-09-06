@@ -45,7 +45,7 @@ export const addView = tryCatchMiddleware( async(req, res)=> {
 })
 
 export const randomVideos = tryCatchMiddleware( async(req, res)=> {
-    const randomVideos = await Video.aggregate([{$sample:{size: 40}}])
+    const randomVideos = await Video.aggregate([{$sample:{size: 1}}])
     res.status(200).send(randomVideos)
 })
 
@@ -59,19 +59,25 @@ export const subscribedChannelsVideos = tryCatchMiddleware( async(req, res)=> {
     if(!user) return res.status(404).send("No user found with the given ID")
 
     const subscribedChannels = user.subscribedChannels
-    // console.log(subscribedChannels)
-
     const list = await Promise.all(subscribedChannels.map((channelId) => {
        return Video.find({userId: channelId})
     }))
-    // const list = await Video.find().where('userId').in(subscribedChannels).exec()
-        res.status(200).send(list.flat().sort((a, b) => b.createdAt - a.createdAt)) 
+    res.status(200).send(list.flat().sort((a, b) => b.createdAt - a.createdAt)) 
+})
 
-    // const channelIds = subscribedChannels.map((channelId) => channelId)
-    // console.log(channelIds)
-    // Video.find({userId: {$in: channelIds}}).then((resp)=> {
-    //     res.status(200).send(resp) 
-    // })
+export const getVideoByTags = tryCatchMiddleware( async(req, res)=> {
+    const tags = req.query.tags.split(",")
 
-       
+    const videos = await Video.find({tags: {$in: tags}}).limit(40)
+    res.status(200).send(videos)
+})
+
+export const searchVideo = tryCatchMiddleware( async(req, res)=> {
+    const query = req.query.query
+
+    const videos = await Video.find({title: {$regex: query, $options:"i"} })
+
+    if(!videos) return res.status(404).send("No video found!")
+
+    res.status(200).send(videos)
 })
