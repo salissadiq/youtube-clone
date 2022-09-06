@@ -16,7 +16,7 @@ router.get('/viewVideo/:videoId', verifyToken, addView)
 
 router.get('/trendsVideo', verifyToken, trendsVideos)
 
-router.get('/randomVideos', verifyToken, randomVideos)
+router.get('/randomVideos', randomVideos)
 
 router.get('/subdcribedChannelsVideos', verifyToken, subscribedChannelsVideos)
 router.get('/tags', getVideoByTags)

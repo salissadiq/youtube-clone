@@ -45,7 +45,7 @@ export const addView = tryCatchMiddleware( async(req, res)=> {
 })
 
 export const randomVideos = tryCatchMiddleware( async(req, res)=> {
-    const randomVideos = await Video.aggregate([{$sample:{size: 1}}])
+    const randomVideos = await Video.aggregate([{$sample:{size: 40}}])
     res.status(200).send(randomVideos)
 })
 
