@@ -14,6 +14,8 @@ export const signup =  tryCatchMiddleware(async(req, res)=> {
         const user = await User.findOne({email: req.body.email})
         if(user) return res.status(400).send("Email already exist")
 
+        //Hashing user password with bcrypt
+        //Generate salt and pass it along with the password
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
         const newUser = new User({...req.body, password: hashedPassword})
