@@ -1,5 +1,6 @@
 import {tryCatchMiddleware} from "../middleware/tryCatch.js"
 import User from "../models/User.js"
+import Video from "../models/Video.js"
 export const updateUser = tryCatchMiddleware( async(req, res) =>{
     if(req.params.id !== req.user.id) return res.status(403).send("You can only update your account!")
 
@@ -47,9 +48,23 @@ export const unSubscribe = tryCatchMiddleware( async(req, res) =>{
 })
 
 export const like = tryCatchMiddleware( async(req, res) =>{
-    res.json("it working bro")
+    const userId = req.user.id
+    const videoId= req.params.videoId
+    await Video.findByIdAndUpdate(videoId, {
+        $addToSet:{likes: userId},
+        $pull:{disLikes: userId}
+    })
+
+    res.status(200).send("The video has been liked!")
 })
 
 export const disLike = tryCatchMiddleware( async(req, res) =>{
-    res.json("it working bro")
+    const userId = req.user.id
+    const videoId= req.params.videoId
+    await Video.findByIdAndUpdate(videoId, {
+        $addToSet:{disLikes: userId},
+        $pull:{likes: userId}
+    })
+
+    res.status(200).send("The video has been disliked!")
 })

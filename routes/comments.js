@@ -5,7 +5,7 @@ import { verifyToken } from "../middleware/verifyToken.js"
 const router = express.Router()
 
 router.post('/addComment', verifyToken, addComment)
-router.post('/addComment', verifyToken, deleteComment)
-router.post('/addComment', verifyToken, getComment)
+router.delete('/deleteComment/:commentId', verifyToken, deleteComment)
+router.get('/getComments/:videoId', verifyToken, getComment)
 
 export default router

@@ -9,7 +9,7 @@ export const addVidoe = tryCatchMiddleware( async(req, res )=> {
 })
 
 export const getVidoe = tryCatchMiddleware( async(req, res )=> {
-    const video = await Video.findById(req.params.id)
+    const video = await Video.findById(req.params.videoId)
     if(!video) return res.status(404).send("No video found!")
 
     res.status(200).json(video)
