@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost/youtube-clone')
     .then(()=>console.log('Connected to mongodb'))
     .catch((err)=>console.log(err))
 
-    app.use(cors())
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 app.use('/api/auth/', userAuthentication)
