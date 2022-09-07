@@ -91,18 +91,24 @@ const Menu = ({ darkMode, setDarkMode }) => {
             LamaTube
           </Logo>
         </Link>
+        <Link to="/" style={{textDecoration:"none", color: "inherit"}}>
         <Item>
           <HomeIcon />
           Home
         </Item>
+        </Link>
+        <Link to="trendVideos" style={{textDecoration:"none", color: "inherit"}}>
         <Item>
           <ExploreOutlinedIcon />
           Explore
         </Item>
+        </Link>
+        <Link to="subscriptions" style={{textDecoration:"none", color: "inherit"}}>
         <Item>
           <SubscriptionsOutlinedIcon />
           Subscriptions
         </Item>
+        </Link>
         <Hr />
         <Item>
           <VideoLibraryOutlinedIcon />
