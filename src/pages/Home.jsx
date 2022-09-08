@@ -18,7 +18,7 @@ const Home = (props) => {
       setVideos(response.data)
     }
     fetchVideos()
-  }, [])
+  }, [props.type])
   return (
     <Container>
       {videos.map((video, index)=>(<Card key={index}  video={video}/>))}

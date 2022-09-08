@@ -1,7 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {format} from "timeago.js"
+import API from "../utils/API";
+
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
@@ -53,6 +56,15 @@ const Info = styled.div`
 `;
 
 const Card = ({ type, video }) => {
+  const [user, setUser] = useState({})
+
+  useEffect(()=> {
+   const fetchUser = async ()=> {
+    const response = await API.get(`/users/findUser/${video.userId}`)
+    setUser(response.data)
+   }
+   fetchUser()
+  }, [video.userId])
   return (
     <Link to="/video/test" style={{ textDecoration: "none" }}>
       <Container type={type}>
@@ -67,7 +79,7 @@ const Card = ({ type, video }) => {
           />
           <Texts>
             <Title>{video.title}</Title>
-            <ChannelName></ChannelName>
+            <ChannelName>{user.name}</ChannelName>
             <Info>{video.views} views • {format(video.createdAt)}</Info>
           </Texts>
         </Details>

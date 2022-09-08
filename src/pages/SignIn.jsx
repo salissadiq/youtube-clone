@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import API from "../utils/API"
 
 const Container = styled.div`
   display: flex;
@@ -64,18 +65,41 @@ const Link = styled.span`
 `;
 
 const SignIn = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  })
+
+  const handleSetFormData = (event) => {
+    const {name, value} = event.target
+    setFormData(prevFormData => (
+      {
+        ...prevFormData,
+        [name]: value,
+      }
+    ))
+  }
+
+  const handleLogin = async(e)=> {
+    e.preventDefault()
+
+    const response = await API.post('/auth/signin', {email: formData.email, password: formData.password})
+    console.log(response.data)
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>Sign in</Title>
         <SubTitle>to continue to LamaTube</SubTitle>
-        <Input placeholder="username" />
-        <Input type="password" placeholder="password" />
-        <Button>Sign in</Button>
+        <Input placeholder="Email" name="email" onChange={handleSetFormData} />
+        <Input type="password" name="password" placeholder="password" onChange={handleSetFormData} />
+        <Button type="submit" onClick={handleLogin} >Sign in</Button>
         <Title>or</Title>
-        <Input placeholder="username" />
-        <Input placeholder="email" />
-        <Input type="password" placeholder="password" />
+        <Input placeholder="Name" name="name" onChange={handleSetFormData} />
+        <Input placeholder="email" name="email" onChange={handleSetFormData}/>
+        <Input type="password" name="password" placeholder="password" onChange={handleSetFormData} />
         <Button>Sign up</Button>
       </Wrapper>
       <More>
