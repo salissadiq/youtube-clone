@@ -5,7 +5,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { VideoCallOutlined } from "@mui/icons-material";
-import { Avatar } from "@mui/material";
+// import { Avatar } from "@mui/material";
 
 const Container = styled.div`
   position: sticky;
@@ -56,6 +56,19 @@ const Button = styled.button`
   align-items: center;
   gap: 5px;
 `;
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+`
+const Avatar = styled.img`
+  width:32px;
+  height:32px;
+  border-radius: 50px;
+  background-color: #999;
+`
 const Navbar = () => {
   const {currentUser} = useSelector(state=> state.user)
 
@@ -71,6 +84,7 @@ const Navbar = () => {
                   ? <User>
                       <VideoCallOutlined />
                       <Avatar />
+                      {currentUser.name}
                     </User> 
                   : <Button>
                   <AccountCircleOutlinedIcon />
