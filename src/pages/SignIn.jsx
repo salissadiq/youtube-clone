@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import API from "../utils/API"
 
 const Container = styled.div`
@@ -70,7 +72,7 @@ const SignIn = () => {
     email: "",
     password: "",
   })
-
+  const dispatch = useDispatch()
   const handleSetFormData = (event) => {
     const {name, value} = event.target
     setFormData(prevFormData => (
@@ -83,9 +85,13 @@ const SignIn = () => {
 
   const handleLogin = async(e)=> {
     e.preventDefault()
-
-    const response = await API.post('/auth/signin', {email: formData.email, password: formData.password})
-    console.log(response.data)
+    dispatch(loginStart())
+    try{
+      const response = await API.post('/auth/signin', {email: formData.email, password: formData.password})
+      dispatch(loginSuccess(response.data))
+    } catch(err) {
+      dispatch(loginFailure())
+    }
   }
 
   return (
